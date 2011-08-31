@@ -23,9 +23,9 @@ FF.
 Failures:
 
   1) Foo should do the right interpolation for error messages
-     Failure/Error: lambda{foo.save!}.should raise_error ActiveRecord::RecordInvalid
-       expected ActiveRecord::RecordInvalid, got #<Encoding::CompatibilityError: incompatible character encodings: UTF-8 and ASCII-8BIT>
-     # ./spec/models/foo_spec.rb:8:in `(root)'
+     Failure/Error: lambda{I18n.t("errors.messages.record_invalid", :errors => foo.errors.full_messages)}.should_not raise_error
+       expected no Exception, got #<Encoding::CompatibilityError: incompatible character encodings: UTF-8 and ASCII-8BIT>
+     # ./spec/models/foo_spec.rb:9:in `(root)'
      # org/jruby/RubyBasicObject.java:1717:in `instance_eval'
      # org/jruby/RubyArray.java:2344:in `collect'
      # org/jruby/RubyArray.java:2344:in `collect'
@@ -37,17 +37,17 @@ Failures:
             got "Ã¡"
        
        (compared using ==)
-     # ./spec/models/foo_spec.rb:12:in `(root)'
+     # ./spec/models/foo_spec.rb:13:in `(root)'
      # org/jruby/RubyBasicObject.java:1717:in `instance_eval'
      # org/jruby/RubyArray.java:2344:in `collect'
      # org/jruby/RubyArray.java:2344:in `collect'
 
-Finished in 1.08 seconds
+Finished in 0.437 seconds
 3 examples, 2 failures
 
 Failed examples:
 
 rspec ./spec/models/foo_spec.rb:6 # Foo should do the right interpolation for error messages
-rspec ./spec/models/foo_spec.rb:11 # Foo should decode json even with special chars
+rspec ./spec/models/foo_spec.rb:12 # Foo should decode json even with special chars
 
 ````
