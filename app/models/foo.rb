@@ -1,3 +1,5 @@
-class Foo < ActiveRecord::Base
-    validates_presence_of :name
+class Foo
+  include ActiveModel::Validations
+  attr_accessor :name
+  validates_presence_of :name
 end
