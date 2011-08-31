@@ -12,7 +12,8 @@ describe Foo do
   it "should decode json even with special chars" do
     ActiveSupport::JSON.decode({:message => "á"}.to_json)['message'].should eq "á"
   end
-
+  
+  # works on jruby 1.9 rails 3.0.10, fails in mri 1.9.2 rails 3.1
   it "should decode json even with special chars - this one works" do
     ActiveSupport::JSON.decode("á".to_json).should eq "á"
   end

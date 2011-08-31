@@ -1,4 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'activemodel', '3.0.10'
+gem 'rails', '3.1.0'
 gem 'rspec-rails'
+
+gem 'sqlite3-ruby', :platforms => :ruby
+
+platforms :jruby do
+  gem 'activerecord-jdbc-adapter', :git => 'git://github.com/nicksieger/activerecord-jdbc-adapter.git'
+  gem 'activerecord-jdbcsqlite3-adapter'
+end
