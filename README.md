@@ -1,4 +1,4 @@
-JRuby 1.6.4(1.9 mode) doesn't work the same way then MRI 1.9.2p290 with String encoding
+JRuby 1.6.4(1.9 mode) doesn't work the same way then MRI 1.9.2p290 in these tests. Tried to isolate as much as possible each one.
 
 ***
 ### Ruby MRI 1.9.2p290
