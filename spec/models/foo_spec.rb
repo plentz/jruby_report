@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 require 'spec_helper'
+require 'multi_json'
 
 describe Foo do
   it "should do the right interpolation for error messages" do
@@ -10,6 +11,6 @@ describe Foo do
   end
 
   it "should decode json even with special chars" do
-    ActiveSupport::JSON.decode({:message => "á"}.to_json)['message'].should eq "á"
+    MultiJson.decode({:message => "á"}.to_json)['message'].should eq "á"
   end
 end
