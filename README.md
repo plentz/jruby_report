@@ -6,34 +6,42 @@ JRuby 1.6.4(1.9 mode) doesn't work the same way then MRI 1.9.2p290 in these test
 ````
 ~/Projects/opensource/jruby_report (master) $ rspec spec
 No DRb server is running. Running in local process instead ...
-...
+F...
 
-Finished in 0.50567 seconds
-3 examples, 0 failures
+Failures:
+
+  1) charpoint should generate the same charpoint in both runtimes 
+     Failure/Error: MultiJson.encode({:message => "á"}).should == "{\"message\":\"á\"}"
+       expected: "{\"message\":\"á\"}"
+            got: "{\"message\":\"\\u00e1\"}" (using ==)
+     # ./spec/models/charpoints_spec.rb:9:in `block (2 levels) in <top (required)>'
+
+Finished in 0.02677 seconds
+4 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/models/charpoints_spec.rb:8 # charpoint should generate the same charpoint in both runtimes 
 ````
 
 ***
 ### JRuby 1.6.4(1.9 mode)
 
 ````
-~/Projects/opensource/jruby_report (master) $ jruby --1.9 -S rspec spec
+~/Projects/opensource/jruby_report (master) $ jruby --1.9 -S rspec spec/models/foo_spec.rb 
+^C~/Projects/opensource/jruby_report (master) $ jruby --1.9 -S rspec spec
 No DRb server is running. Running in local process instead ...
 JRuby limited openssl loaded. http://jruby.org/openssl
 gem install jruby-openssl for full support.
-DEPRECATION WARNING: Arel::Visitors::VISITORS is deprecated and will be removed. Database adapters should define a visitor_for method which returns the appropriate visitor for the database. For example, MysqlAdapter.visitor_for(pool) returns Arel::Visitors::MySQL.new(pool). (called from mon_synchronize at /Users/plentz/.rvm/rubies/jruby-1.6.4/lib/ruby/1.9/monitor.rb:201)
-hey, look mommy! ->>>> 7
-FFF
+FF.F
 
 Failures:
 
-  1) Bar should know how to reload a record
-     Failure/Error: bar.reload
-     ActiveRecord::RecordNotFound:
-       Couldn't find Bar with id=7
-     # org/jruby/RubyBasicObject.java:1697:in `__send__'
-     # org/jruby/RubyBasicObject.java:1697:in `__send__'
-     # org/jruby/RubyKernel.java:2121:in `send'
-     # ./spec/models/bar_spec.rb:7:in `(root)'
+  1) charpoint should generate the same charpoint in both runtimes 
+     Failure/Error: MultiJson.encode({:message => "á"}).should == "{\"message\":\"á\"}"
+       expected: "{\"message\":\"á\"}"
+            got: "{\"message\":\"\\ufffd\"}" (using ==)
+     # ./spec/models/charpoints_spec.rb:9:in `(root)'
      # org/jruby/RubyBasicObject.java:1717:in `instance_eval'
      # org/jruby/RubyArray.java:2344:in `collect'
      # org/jruby/RubyArray.java:2344:in `collect'
@@ -46,25 +54,24 @@ Failures:
      # org/jruby/RubyArray.java:2344:in `collect'
      # org/jruby/RubyArray.java:2344:in `collect'
 
-  3) Foo should decode json even with special chars
-     Failure/Error: ActiveSupport::JSON.decode({:message => "á"}.to_json)['message'].should eq "á"
+  3) jruby json should decode json even with special chars using to_json
+     Failure/Error: MultiJson.decode({:message => "á"}.to_json)['message'].should eq "á"
        
        expected "á"
             got "\xC3\xA1"
        
        (compared using ==)
-     # ./spec/models/foo_spec.rb:13:in `(root)'
+     # ./spec/models/json_spec.rb:14:in `(root)'
      # org/jruby/RubyBasicObject.java:1717:in `instance_eval'
      # org/jruby/RubyArray.java:2344:in `collect'
      # org/jruby/RubyArray.java:2344:in `collect'
 
-Finished in 1.12 seconds
-3 examples, 3 failures
+Finished in 0.475 seconds
+4 examples, 3 failures
 
 Failed examples:
 
-rspec ./spec/models/bar_spec.rb:4 # Bar should know how to reload a record
+rspec ./spec/models/charpoints_spec.rb:8 # charpoint should generate the same charpoint in both runtimes 
 rspec ./spec/models/foo_spec.rb:6 # Foo should do the right interpolation for error messages
-rspec ./spec/models/foo_spec.rb:12 # Foo should decode json even with special chars
-
+rspec ./spec/models/json_spec.rb:13 # jruby json should decode json even with special chars using to_json
 ````
