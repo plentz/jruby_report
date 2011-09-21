@@ -1,7 +1,6 @@
 # encoding: UTF-8
 
 require 'spec_helper'
-require 'multi_json'
 
 # there's 2 methods of changing MultiJson(the lib used by rails to handle json) engines.
 # One is to require the lib directly and the other is to set MultiJson.engine =, but 
@@ -14,8 +13,8 @@ require 'multi_json'
 #require 'yajl'
 #fail in both
 #require 'json'
-
-require "multi_json/vendor/ok_json"
+#fail in both
+#require "multi_json/vendor/ok_json"
 
 describe "MultiJson.engine" do
 
