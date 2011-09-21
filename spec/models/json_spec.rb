@@ -5,7 +5,7 @@ require 'multi_json'
 
 # there's 2 methods of changing MultiJson(the lib used by rails to handle json) engines.
 # One is to require the lib directly and the other is to set MultiJson.engine =, but 
-# the behavior is different for each one. Above each method I've put if it works of
+# the behavior is different for each one. Above each method I've put if it works or
 # fails after testing using jruby 1.6.4 and mri 1.9.2p290
 
 #pass in both
