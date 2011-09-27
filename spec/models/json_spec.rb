@@ -37,7 +37,7 @@ describe "MultiJson.engine" do
     MultiJson.decode({:message => "á"}.to_json)['message'].should eq "á"
   end
 
-  it "should encode json even with special chars using to_json" do
+  it "should encode json even with special chars" do
     MultiJson.encode({a:"á"}).should match /á/
   end
 end
