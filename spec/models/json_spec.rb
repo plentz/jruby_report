@@ -2,6 +2,8 @@
 
 require 'spec_helper'
 
+# related https://github.com/intridea/multi_json/issues/25
+
 # there's 2 methods of changing MultiJson(the lib used by rails to handle json) engines.
 # One is to require the lib directly and the other is to set MultiJson.engine =, but 
 # the behavior is different for each one. Above each method I've put if it works or
