@@ -6,11 +6,25 @@ JRuby 1.6.6(1.9 mode) doesn't work the same way then MRI 1.9.3p0 in these tests.
 ````
 ~/Projects/opensource/jruby_report (master) $ rspec spec
 No DRb server is running. Running in local process instead ...
-MultiJson::Engines::Yajl
-.....
+F.
 
-Finished in 0.01431 seconds
-5 examples, 0 failures
+Failures:
+
+  1) OkJson.engine should generate the same char codepoint in both implementations(actually it generates \u00C3\u00A1 for jruby and \xC3\xA1 for mri)
+     Failure/Error: MultiJson.decode({:message => "á"}.to_json)['message'].should eq "á"
+       
+       expected: "á"
+            got: "\xC3\xA1"
+       
+       (compared using ==)
+     # ./spec/models/ok_json_spec.rb:9:in `block (2 levels) in <top (required)>'
+
+Finished in 0.00474 seconds
+2 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/models/ok_json_spec.rb:8 # OkJson.engine should generate the same char codepoint in both implementations(actually it generates \u00C3\u00A1 for jruby and \xC3\xA1 for mri)
 ````
 
 ***
@@ -21,47 +35,31 @@ Finished in 0.01431 seconds
 No DRb server is running. Running in local process instead ...
 JRuby limited openssl loaded. http://jruby.org/openssl
 gem install jruby-openssl for full support.
-MultiJson::Engines::JsonGem
-F.FFF
+MultiJson::Engines::OkJson
+FF
 
 Failures:
 
-  1) charpoint should generate the same charpoint in both runtimes 
-     Failure/Error: MultiJson.encode({:message => "á"}).should == "{\"message\":\"á\"}"
-       expected: "{\"message\":\"á\"}"
-            got: "{\"message\":\"\\u00e1\"}" (using ==)
-     # ./spec/models/charpoints_spec.rb:9:in `(root)'
-
-  2) MultiJson.engine should decode json even with special chars using a json string directly
-     Failure/Error: MultiJson.decode("{\"message\":\"á\"}")['message'].should eq "á"
-       
-       expected: "á"
-            got: "\u00C3\u00A1"
-       
-       (compared using ==)
-     # ./spec/models/json_spec.rb:33:in `(root)'
-
-  3) MultiJson.engine should decode json even with special chars using to_json
+  1) OkJson.engine should generate the same char codepoint in both implementations(actually it generates \u00C3\u00A1 for jruby and \xC3\xA1 for mri)
      Failure/Error: MultiJson.decode({:message => "á"}.to_json)['message'].should eq "á"
        
        expected: "á"
             got: "\u00C3\u00A1"
        
        (compared using ==)
-     # ./spec/models/json_spec.rb:37:in `(root)'
+     # ./spec/models/ok_json_spec.rb:10:in `(root)'
 
-  4) MultiJson.engine should decode json even with special chars using to_json
-     Failure/Error: MultiJson.encode({a:"á"}).should match /á/
-       expected "{\"a\":\"\\u00e1\"}" to match /á/
-     # ./spec/models/json_spec.rb:41:in `(root)'
+  2) Yajl::Encoder should encode the yml even with special chars in both implementations
+     Failure/Error: Yajl::Encoder.encode({:message => "á"}).should == "{\"message\":\"á\"}"
+       expected: "{\"message\":\"á\"}"
+            got: "{\"message\":\"\u00C3\u00A1\"}" (using ==)
+     # ./spec/models/yajl_encoding_spec.rb:8:in `(root)'
 
-Finished in 0.203 seconds
-5 examples, 4 failures
+Finished in 0.034 seconds
+2 examples, 2 failures
 
 Failed examples:
 
-rspec ./spec/models/charpoints_spec.rb:8 # charpoint should generate the same charpoint in both runtimes 
-rspec ./spec/models/json_spec.rb:32 # MultiJson.engine should decode json even with special chars using a json string directly
-rspec ./spec/models/json_spec.rb:36 # MultiJson.engine should decode json even with special chars using to_json
-rspec ./spec/models/json_spec.rb:40 # MultiJson.engine should decode json even with special chars using to_json
+rspec ./spec/models/ok_json_spec.rb:9 # OkJson.engine should generate the same char codepoint in both implementations(actually it generates \u00C3\u00A1 for jruby and \xC3\xA1 for mri)
+rspec ./spec/models/yajl_encoding_spec.rb:7 # Yajl::Encoder should encode the yml even with special chars in both implementations
 ````
