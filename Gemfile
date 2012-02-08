@@ -7,9 +7,9 @@ gem 'multi_json'
 gem 'json', :require => false
 gem 'yajl-ruby', :require => false
 
-gem 'sqlite3-ruby', :platforms => :ruby
-
-platforms :jruby do
-  gem 'activerecord-jdbc-adapter', :git => 'git://github.com/nicksieger/activerecord-jdbc-adapter.git'
+if RUBY_PLATFORM == "java"
+  gem 'activerecord-jdbc-adapter'
   gem 'activerecord-jdbcsqlite3-adapter'
+else 
+  gem 'sqlite3-ruby'
 end
