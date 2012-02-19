@@ -1,7 +1,0 @@
-# encoding: UTF-8
-
-en:
-  errors:
-    messages:
-      blank: "não pode ficar em branco"
-      record_invalid: "A validação falhou: %{errors}"
