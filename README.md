@@ -4,62 +4,61 @@ JRuby 1.6.6(1.9 mode) doesn't work the same way then MRI 1.9.3p0 in these tests.
 ### Ruby MRI 1.9.3p0
 
 ````
-~/Projects/opensource/jruby_report (master) $ rspec spec
-No DRb server is running. Running in local process instead ...
-F.
+~/Projects/opensource/jruby_report (master) $ ruby -I. yajl_test.rb 
+Run options: --seed 49802
 
-Failures:
+ Running tests:
 
-  1) OkJson.engine should generate the same char codepoint in both implementations(actually it generates \u00C3\u00A1 for jruby and \xC3\xA1 for mri)
-     Failure/Error: MultiJson.decode({:message => "á"}.to_json)['message'].should eq "á"
-       
-       expected: "á"
-            got: "\xC3\xA1"
-       
-       (compared using ==)
-     # ./spec/models/ok_json_spec.rb:9:in `block (2 levels) in <top (required)>'
+.
 
-Finished in 0.00474 seconds
-2 examples, 1 failure
+Finished tests in 0.000746s, 1340.4826 tests/s, 1340.4826 assertions/s.
 
-Failed examples:
+1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
+~/Projects/opensource/jruby_report (master) $ ruby -I. ok_json_test.rb 
+Run options: --seed 64345
 
-rspec ./spec/models/ok_json_spec.rb:8 # OkJson.engine should generate the same char codepoint in both implementations(actually it generates \u00C3\u00A1 for jruby and \xC3\xA1 for mri)
+ Running tests:
+
+F
+
+Finished tests in 0.031096s, 32.1585 tests/s, 32.1585 assertions/s.
+
+  1) Failure:
+test_json_decoder(OkJsonTest) [ok_json_test.rb:12]:
+Expected: "á"
+  Actual: "\xEF\xBF\xBD"
+
+1 tests, 1 assertions, 1 failures, 0 errors, 0 skips
 ````
 
 ***
 ### JRuby 1.6.6(1.9 mode)
 
 ````
-~/Projects/opensource/jruby_report (master) $ jruby --1.9 -S rspec spec
-No DRb server is running. Running in local process instead ...
-JRuby limited openssl loaded. http://jruby.org/openssl
-gem install jruby-openssl for full support.
-MultiJson::Engines::OkJson
-FF
+~/Projects/opensource/jruby_report (master) $ ruby -I. yajl_test.rb
+Loaded suite yajl_test
+Started
+F
+Finished in 0.022000 seconds.
 
-Failures:
+  1) Failure:
+test_json_encoder(YajlTest) [yajl_test.rb:12]:
+Expected "{\"message\":\"á\"}", not "{\"message\":\"\u00C3\u00A1\"}".
 
-  1) OkJson.engine should generate the same char codepoint in both implementations(actually it generates \u00C3\u00A1 for jruby and \xC3\xA1 for mri)
-     Failure/Error: MultiJson.decode({:message => "á"}.to_json)['message'].should eq "á"
-       
-       expected: "á"
-            got: "\u00C3\u00A1"
-       
-       (compared using ==)
-     # ./spec/models/ok_json_spec.rb:10:in `(root)'
+1 tests, 1 assertions, 1 failures, 0 errors, 0 skips
 
-  2) Yajl::Encoder should encode the yml even with special chars in both implementations
-     Failure/Error: Yajl::Encoder.encode({:message => "á"}).should == "{\"message\":\"á\"}"
-       expected: "{\"message\":\"á\"}"
-            got: "{\"message\":\"\u00C3\u00A1\"}" (using ==)
-     # ./spec/models/yajl_encoding_spec.rb:8:in `(root)'
+Test run options: --seed 11984
+~/Projects/opensource/jruby_report (master) $ ruby -I. ok_json_test.rb 
+Loaded suite ok_json_test
+Started
+F
+Finished in 0.037000 seconds.
 
-Finished in 0.034 seconds
-2 examples, 2 failures
+  1) Failure:
+test_json_decoder(OkJsonTest) [ok_json_test.rb:12]:
+Expected "á", not "\u00EF\u00BF\u00BD".
 
-Failed examples:
+1 tests, 1 assertions, 1 failures, 0 errors, 0 skips
 
-rspec ./spec/models/ok_json_spec.rb:9 # OkJson.engine should generate the same char codepoint in both implementations(actually it generates \u00C3\u00A1 for jruby and \xC3\xA1 for mri)
-rspec ./spec/models/yajl_encoding_spec.rb:7 # Yajl::Encoder should encode the yml even with special chars in both implementations
+Test run options: --seed 5352
 ````
