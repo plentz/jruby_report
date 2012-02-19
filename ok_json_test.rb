@@ -18,4 +18,20 @@ class OkJsonTest < MiniTest::Unit::TestCase
     json = '{"message":"á"}'
     assert_equal("á", OkJson.decode(json)['message'])
   end
+
+  def test_decode_bad
+    json = "{\"message\":\"\\ufffd\"}"
+    assert_equal([0xef, 0xbf, 0xbd].pack('C*'), OkJson.decode(json)['message'])
+
+    # The output of the following line on JRuby is:
+    #
+    #  "\u00EF\u00BF\u00BD"
+    #
+    # On MRI, it is
+    #
+    #  "\xEF\xBF\xBD"
+    #
+    # It seems the bytes are exactly the same, only the inspect is different.
+    p OkJson.decode(json)['message']
+  end
 end
