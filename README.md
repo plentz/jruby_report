@@ -1,41 +1,56 @@
-JRuby 1.6.6(1.9 mode) doesn't work the same way then MRI 1.9.3p0 in these tests. Tried to isolate as much as possible each one.
+JRuby 1.6.6(1.9 mode) doesn't work the same way then MRI 1.9.3p125 in these tests. Tried to isolate as much as possible each one.
 
 ***
-### Ruby MRI 1.9.3p0
+### Ruby MRI 1.9.3p125
 
 ````
+~/Projects/opensource/jruby_report (master) $ ruby -I. ok_json_test.rb 
+Run options: --seed 51490
+
+ Running tests:
+
+."\xEF\xBF\xBD"
+.F
+
+Finished tests in 0.035402s, 84.7410 tests/s, 84.7410 assertions/s.
+
+  1) Failure:
+test_json_encode(OkJsonTest) [ok_json_test.rb:14]:
+Expected: "{\"message\":\"á\"}"
+  Actual: "{\"message\":\"\\ufffd\"}"
+
+3 tests, 3 assertions, 1 failures, 0 errors, 0 skips
 ~/Projects/opensource/jruby_report (master) $ ruby -I. yajl_test.rb 
-Run options: --seed 49802
+Run options: --seed 34463
 
  Running tests:
 
 .
 
-Finished tests in 0.000746s, 1340.4826 tests/s, 1340.4826 assertions/s.
+Finished tests in 0.000859s, 1164.1444 tests/s, 1164.1444 assertions/s.
 
 1 tests, 1 assertions, 0 failures, 0 errors, 0 skips
-~/Projects/opensource/jruby_report (master) $ ruby -I. ok_json_test.rb 
-Run options: --seed 64345
-
- Running tests:
-
-F
-
-Finished tests in 0.031096s, 32.1585 tests/s, 32.1585 assertions/s.
-
-  1) Failure:
-test_json_decoder(OkJsonTest) [ok_json_test.rb:12]:
-Expected: "á"
-  Actual: "\xEF\xBF\xBD"
-
-1 tests, 1 assertions, 1 failures, 0 errors, 0 skips
 ````
 
 ***
 ### JRuby 1.6.6(1.9 mode)
 
 ````
-~/Projects/opensource/jruby_report (master) $ ruby -I. yajl_test.rb
+~/Projects/opensource/jruby_report (master) $ ruby -I. ok_json_test.rb 
+Loaded suite ok_json_test
+Started
+."\u00EF\u00BF\u00BD"
+.F
+Finished in 0.064000 seconds.
+
+  1) Failure:
+test_json_encode(OkJsonTest) [ok_json_test.rb:14]:
+Expected "{\"message\":\"á\"}", not "{\"message\":\"\\ufffd\"}".
+
+3 tests, 3 assertions, 1 failures, 0 errors, 0 skips
+
+Test run options: --seed 11658
+~/Projects/opensource/jruby_report (master) $ ruby -I. yajl_test.rb 
 Loaded suite yajl_test
 Started
 F
@@ -47,18 +62,5 @@ Expected "{\"message\":\"á\"}", not "{\"message\":\"\u00C3\u00A1\"}".
 
 1 tests, 1 assertions, 1 failures, 0 errors, 0 skips
 
-Test run options: --seed 11984
-~/Projects/opensource/jruby_report (master) $ ruby -I. ok_json_test.rb 
-Loaded suite ok_json_test
-Started
-F
-Finished in 0.037000 seconds.
-
-  1) Failure:
-test_json_decoder(OkJsonTest) [ok_json_test.rb:12]:
-Expected "á", not "\u00EF\u00BF\u00BD".
-
-1 tests, 1 assertions, 1 failures, 0 errors, 0 skips
-
-Test run options: --seed 5352
+Test run options: --seed 2044
 ````
