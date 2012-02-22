@@ -9,7 +9,7 @@ require 'okjson'
 class OkJsonTest < MiniTest::Unit::TestCase
   def test_json_encode
     data = {'message' => "á"}
-    json = OkJson.encode data
+    json = OkJson.encode(data)
     assert_equal '{"message":"\u00e1"}', json
   end
 
@@ -20,6 +20,6 @@ class OkJsonTest < MiniTest::Unit::TestCase
 
   def test_decode_bad
     json = "{\"message\":\"\\ufffd\"}"
-    assert_equal("á", OkJson.decode(json)['message'])
+    assert_equal("\xEF\xBF\xBD", OkJson.decode(json)['message'])
   end
 end
