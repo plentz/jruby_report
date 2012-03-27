@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-# Reproduce by running `ruby -I. crack_test.rb`
-
 require 'rubygems'
 require 'minitest/autorun'
 require 'crack/json'
