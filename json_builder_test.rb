@@ -1,7 +1,5 @@
 # encoding: UTF-8
 
-# Reproduce by running `ruby -I. json_builder_test.rb`
-
 require 'rubygems'
 require 'minitest/autorun'
 require 'json_builder'
