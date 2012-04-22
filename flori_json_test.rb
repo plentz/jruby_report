@@ -9,13 +9,13 @@ require 'json/ext' #this fails
 class FloriJsonTest < MiniTest::Unit::TestCase
 
   #flori/json#97
-  def test_json_encoder
+  def test_json_generator
     json = JSON.generate({'message' => "á"})
     assert_equal("{\"message\":\"á\"}", json)
   end
 
   #flori/json#101
-  def test_encoding_after_encoding
+  def test_to_json_encoding_result
     hash = {"å"=>1}
     assert_equal(Encoding::UTF_8, hash.to_json.encoding)
   end
