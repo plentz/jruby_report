@@ -8,12 +8,6 @@ require 'json/ext' #this fails
 
 class FloriJsonTest < MiniTest::Unit::TestCase
 
-  #flori/json#97
-  def test_json_generator
-    json = JSON.generate({'message' => "á"})
-    assert_equal("{\"message\":\"á\"}", json)
-  end
-
   #flori/json#101
   def test_to_json_encoding_result
     hash = {"å"=>1}
