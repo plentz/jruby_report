@@ -1,1 +1,1 @@
-JRuby 1.6.7(1.9 mode) doesn't work the same way then MRI 1.9.3p194 in these tests. Tried to isolate as much as possible each one.
+JRuby 1.7.1(1.9 mode) doesn't work the same way then MRI 1.9.3p362 in these tests. Tried to isolate as much as possible each one.
